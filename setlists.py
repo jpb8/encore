@@ -9,7 +9,6 @@ class Setlists(API):
     def get_setlists(self, mbid, page=1):
         """" Get 20 set lists for the supplied artist and page """
         path = "1.0/artist/{}/setlists?p={}".format(mbid, page)
-        print(path)
         return self._make_request(path)
 
     def get_all_setlists(self, mbid):

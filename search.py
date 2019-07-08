@@ -5,15 +5,20 @@ class Search(API):
     def __int__(self, api_key, content="json", timeout=5, sleep_time=1.5):
         super().__init__(api_key, content, timeout, sleep_time)
 
-    def _build_params(self, page=1, **kwargs):
+    def _build_params(self, page=1, params=None, **kwargs):
         """ build search parameters dictionary """
-        params = {
+        all_params = {
             "p": page
         }
-        for k, v in kwargs.items():
-            if v:
-                params[k] = v
-        return params
+        if params:
+            for k, v in params.items():
+                if v:
+                    all_params[k] = v
+        elif kwargs:
+            for k, v in kwargs.items():
+                if v:
+                    all_params[k] = v
+        return all_params
 
     def artists(self, artist_mbid=None, artist_name=None, artist_tmid=None, page=1, sort="sortName"):
         """
@@ -70,7 +75,7 @@ class Search(API):
                          "stateCode", "tourName", "venueId", "venueName", "year"]
         for k, v in kwargs.items():
             assert k in setlist_items
-        params = self._build_params(page=page,kwargs=kwargs)
+        params = self._build_params(page=page, params=kwargs)
         path = "1.0/search/setlists"
         return self._make_request(path=path, params=params)
 
@@ -84,6 +89,7 @@ class Search(API):
         venue_items = ["cityId", "cityName", "country", "name", "state", "stateCode"]
         for k, v in kwargs.items():
             assert k in venue_items
-        path = "1.0/search/cities"
-        params = self._build_params(page=page, kwargs=kwargs)
+        path = "1.0/search/venues"
+        params = self._build_params(page=page, params=kwargs)
+        print(params)
         return self._make_request(path=path, params=params)
