@@ -3,7 +3,7 @@ import math
 
 
 class Setlists(API):
-    def __int__(self, api_key, content="json", timeout=5, sleep_time=1.5):
+    def __int__(self, api_key, content="json", timeout=5, sleep_time=1.25):
         super().__init__(api_key, content, timeout, sleep_time)
 
     def get_setlists(self, mbid, page=1):
@@ -15,10 +15,13 @@ class Setlists(API):
         """ Get all of an Artist's setlists """
         first_set = self.get_setlists(mbid, 1)
         data = self._json_loads(first_set)
-        pages = math.ceil(data["total"] / 20) - 1
+        if "code" in data or "message" in data:
+            return None
+        pages = math.ceil(data["total"] / 20) - 1 if "total" in data else 0
         print("{} total pages".format(pages))
         for i in range(pages):
             set = self.get_setlists(mbid, i + 2)
             set_data = self._json_loads(set)
+            print(set_data)
             data["setlist"] = data["setlist"] + set_data["setlist"]
         return data
