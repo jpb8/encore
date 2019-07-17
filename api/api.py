@@ -9,7 +9,7 @@ class API:
     session = requests.Session()
     session.headers = {'application': 'PythonWrapper'}
 
-    def __init__(self, api_key, content="json", timeout=5, sleep_time=1.25):
+    def __init__(self, api_key, content="json", timeout=5, sleep_time=0.1):
         """ JsonODDS API Constructor
         :param api_key: key provided by Sportradar, specific to the sport's API
         :param timeout: time before quitting on response (seconds)

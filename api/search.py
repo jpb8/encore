@@ -1,8 +1,8 @@
-from api import API
+from api.api import API
 
 
 class Search(API):
-    def __int__(self, api_key, content="json", timeout=5, sleep_time=1.5):
+    def __int__(self, api_key, content="json", timeout=5, sleep_time=0.1):
         super().__init__(api_key, content, timeout, sleep_time)
 
     def _build_params(self, page=1, params=None, **kwargs):

@@ -1,4 +1,4 @@
-from api import API
+from api.api import API
 
 
 class Venue(API):
